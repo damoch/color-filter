@@ -8,10 +8,18 @@ namespace ColorFilterLib
     {
         private Bitmap _currentImage;
         private Bitmap _grayscaledImage;
+        private Bitmap _testImage;
         private Color _colorToFilter;
         private List<Pixel> _filteredPixels;
         private Color _marginLow;
         private Color _marginHigh;
+        private bool _testMode;
+        private readonly string _testImagePath = "test.jpg";
+
+        public Filter(bool testMode)
+        {
+            _testMode = testMode;
+        }
 
         public void LoadImage(string path)
         {
@@ -61,6 +69,7 @@ namespace ColorFilterLib
             Console.WriteLine("Searching for matching pixels");
             _filteredPixels = new List<Pixel>();
             _grayscaledImage = new Bitmap(_currentImage.Width, _currentImage.Height);
+
             for (int x = 0; x < _currentImage.Width; x++)
             {
                 for (int y = 0; y < _currentImage.Height; y++)
@@ -110,6 +119,32 @@ namespace ColorFilterLib
         {
             _grayscaledImage.Save(path);
             Console.WriteLine($"{path} saved");
+
+            if (_testMode)
+            {
+                Console.WriteLine("Creating test image");
+                _testImage = new Bitmap(_currentImage.Width * 2, _currentImage.Height);
+
+
+                for (int x = 0; x < _currentImage.Width; x++)
+                {
+                    for (int y = 0; y < _currentImage.Height; y++)
+                    {
+                        _testImage.SetPixel(x, y, _currentImage.GetPixel(x, y));
+                    }
+                }
+
+                for (int x = _currentImage.Width; x < _currentImage.Width*2; x++)
+                {
+                    for (int y = 0; y < _currentImage.Height; y++)
+                    {
+                        _testImage.SetPixel(x, y, _grayscaledImage.GetPixel(x - _currentImage.Width, y));
+                    }
+                }
+
+                _testImage.Save(_testImagePath);
+                Console.WriteLine($"{_testImagePath} saved");
+            }
         }
     }
 }

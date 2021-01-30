@@ -12,10 +12,10 @@ namespace ColorFilter
         private static Filter _filter;
         static void Main(string[] args)
         {
-            _filter = new Filter();
+            _filter = new Filter(false);
             _filter.LoadImage("PC130895.JPG");
             _filter.SetColorToFilter(173, 29, 29);
-            _filter.SetPercentageMargin(30, 10, 10);
+            _filter.SetPercentageMargin(40, 10, 10);
             _filter.FilterColors();
             _filter.ApplyFilter();
             _filter.SaveResult("result.jpg");
