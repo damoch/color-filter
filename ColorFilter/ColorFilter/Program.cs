@@ -12,13 +12,13 @@ namespace ColorFilter
         private static Filter _filter;
         static void Main(string[] args)
         {
-            _filter = new Filter(false);
-            _filter.LoadImage("PC130895.JPG");
-            _filter.SetColorToFilter(173, 29, 29);
-            _filter.SetPercentageMargin(40, 10, 10);
+            _filter = new Filter(true);
+            _filter.LoadImage("baboon.png");
+            _filter.SetColorToFilter(255, 80, 140);
+            _filter.SetPercentageMargin(100, 12, 100);
             _filter.FilterColors();
             _filter.ApplyFilter();
-            _filter.SaveResult("result.jpg");
+            _filter.SaveResult();
             Console.ReadKey();
         }
     }

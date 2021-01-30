@@ -15,6 +15,8 @@ namespace ColorFilterLib
         private Color _marginHigh;
         private bool _testMode;
         private readonly string _testImagePath = "test.jpg";
+        private readonly string _resultSuffix = "_filtered";
+        private string _inputPath;
 
         public Filter(bool testMode)
         {
@@ -23,6 +25,7 @@ namespace ColorFilterLib
 
         public void LoadImage(string path)
         {
+            _inputPath = path;
             _currentImage = (Bitmap)Image.FromFile(path);
             Console.WriteLine($"{path} loaded");
         }
@@ -115,10 +118,12 @@ namespace ColorFilterLib
             }
         }
 
-        public void SaveResult(string path)
+        public void SaveResult()
         {
-            _grayscaledImage.Save(path);
-            Console.WriteLine($"{path} saved");
+            var inputParts = _inputPath.Split('.');
+            var filename = $"{inputParts[0]}{_resultSuffix}.{inputParts[1]}";
+            _grayscaledImage.Save(filename);
+            Console.WriteLine($"{filename} saved");
 
             if (_testMode)
             {
