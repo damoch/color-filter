@@ -25,6 +25,11 @@ namespace ColorFilterLib
             Console.WriteLine("color set");
         }
 
+        public void SetPercentageMargin(int red, int green, int blue)
+        {
+            SetErrorMarginForColor((int)(red / 100f * 255), (int)(green / 100f * 255), (int)(blue / 100f * 255));
+        }
+
         public void SetErrorMarginForColor(int red, int green, int blue)
         {
             var errorMargin = Color.FromArgb(red, green, blue);

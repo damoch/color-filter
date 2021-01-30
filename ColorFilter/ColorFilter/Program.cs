@@ -15,7 +15,7 @@ namespace ColorFilter
             _filter = new Filter();
             _filter.LoadImage("PC130895.JPG");
             _filter.SetColorToFilter(173, 29, 29);
-            _filter.SetErrorMarginForColor(40, 20, 20);
+            _filter.SetPercentageMargin(30, 10, 10);
             _filter.FilterColors();
             _filter.ApplyFilter();
             _filter.SaveResult("result.jpg");
