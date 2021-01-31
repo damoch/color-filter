@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 
 namespace ColorFilterLib
@@ -13,14 +14,12 @@ namespace ColorFilterLib
         private List<Pixel> _filteredPixels;
         private Color _marginLow;
         private Color _marginHigh;
-        private bool _testMode;
         private readonly string _testImagePath = "test.jpg";
         private readonly string _resultSuffix = "_filtered";
         private string _inputPath;
 
-        public Filter(bool testMode)
+        public Filter()
         {
-            _testMode = testMode;
         }
 
         public void LoadImage(string path)
@@ -33,15 +32,16 @@ namespace ColorFilterLib
         public void SetColorToFilter(int red, int green, int blue)
         {
             _colorToFilter = Color.FromArgb(red, green, blue);
-            Console.WriteLine("color set");
+            Console.WriteLine($"Color set: R:{red} G:{green} B:{blue}");
         }
 
-        public void SetPercentageMargin(int red, int green, int blue)
+        public void SetTolerance(int red, int green, int blue)
         {
             SetErrorMarginForColor((int)(red / 100f * 255), (int)(green / 100f * 255), (int)(blue / 100f * 255));
+            Console.WriteLine($"Tolerance: R:{red}% G:{green}% B:{blue}%");
         }
 
-        public void SetErrorMarginForColor(int red, int green, int blue)
+        private void SetErrorMarginForColor(int red, int green, int blue)
         {
             var errorMargin = Color.FromArgb(red, green, blue);
 
@@ -69,7 +69,8 @@ namespace ColorFilterLib
 
         public void FilterColors()
         {
-            Console.WriteLine("Searching for matching pixels");
+            Console.WriteLine("Searching for matching pixels...");
+            var sw = Stopwatch.StartNew();
             _filteredPixels = new List<Pixel>();
             _grayscaledImage = new Bitmap(_currentImage.Width, _currentImage.Height);
 
@@ -98,7 +99,8 @@ namespace ColorFilterLib
                     });
                 }
             }
-            Console.WriteLine($"{_filteredPixels.Count} pixels found");
+            sw.Stop();
+            Console.WriteLine($"{_filteredPixels.Count} pixels found in {sw.ElapsedMilliseconds}ms");
 
         }
 
@@ -111,11 +113,14 @@ namespace ColorFilterLib
 
         public void ApplyFilter()
         {
-            Console.WriteLine("setting pixels");
+            Console.WriteLine("Setting pixels...");
+            var sw = Stopwatch.StartNew();
             foreach (var pixel in _filteredPixels)
             {
                 _grayscaledImage.SetPixel(pixel.X, pixel.Y, pixel.Color);
             }
+            sw.Stop();
+            Console.WriteLine($"Done in {sw.ElapsedMilliseconds}ms");
         }
 
         public void SaveResult()
@@ -124,32 +129,42 @@ namespace ColorFilterLib
             var filename = $"{inputParts[0]}{_resultSuffix}.{inputParts[1]}";
             _grayscaledImage.Save(filename);
             Console.WriteLine($"{filename} saved");
+        }
 
-            if (_testMode)
+        public void SaveTestImage()
+        {
+            Console.WriteLine("Creating test image");
+            _testImage = new Bitmap(_currentImage.Width * 2, _currentImage.Height);
+
+
+            for (int x = 0; x < _currentImage.Width; x++)
             {
-                Console.WriteLine("Creating test image");
-                _testImage = new Bitmap(_currentImage.Width * 2, _currentImage.Height);
-
-
-                for (int x = 0; x < _currentImage.Width; x++)
+                for (int y = 0; y < _currentImage.Height; y++)
                 {
-                    for (int y = 0; y < _currentImage.Height; y++)
-                    {
-                        _testImage.SetPixel(x, y, _currentImage.GetPixel(x, y));
-                    }
+                    _testImage.SetPixel(x, y, _currentImage.GetPixel(x, y));
                 }
-
-                for (int x = _currentImage.Width; x < _currentImage.Width*2; x++)
-                {
-                    for (int y = 0; y < _currentImage.Height; y++)
-                    {
-                        _testImage.SetPixel(x, y, _grayscaledImage.GetPixel(x - _currentImage.Width, y));
-                    }
-                }
-
-                _testImage.Save(_testImagePath);
-                Console.WriteLine($"{_testImagePath} saved");
             }
+
+            for (int x = _currentImage.Width; x < _currentImage.Width * 2; x++)
+            {
+                for (int y = 0; y < _currentImage.Height; y++)
+                {
+                    _testImage.SetPixel(x, y, _grayscaledImage.GetPixel(x - _currentImage.Width, y));
+                }
+            }
+
+            _testImage.Save(_testImagePath);
+            Console.WriteLine($"{_testImagePath} saved");
+        }
+
+        public void ReleaseResources()
+        {
+            _currentImage.Dispose();
+            _currentImage = null;
+            _grayscaledImage.Dispose();
+            _grayscaledImage = null;
+            _filteredPixels = null;
+            GC.Collect();
         }
     }
 }
