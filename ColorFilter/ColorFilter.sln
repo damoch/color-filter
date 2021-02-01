@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorFilter", "ColorFilter\ColorFilter.csproj", "{460FAB5A-C4B7-43CF-B086-509AE26AD6D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorFilterLib", "ColorFilterLib\ColorFilterLib.csproj", "{F9F62741-F0CE-4E9B-BFA2-7278441FC00F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColorFilterLib", "ColorFilterLib\ColorFilterLib.csproj", "{F9F62741-F0CE-4E9B-BFA2-7278441FC00F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorFilterWindows", "ColorFilterWindows\ColorFilterWindows.csproj", "{327782DC-65CD-415B-834F-9638C90E9432}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{F9F62741-F0CE-4E9B-BFA2-7278441FC00F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9F62741-F0CE-4E9B-BFA2-7278441FC00F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9F62741-F0CE-4E9B-BFA2-7278441FC00F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{327782DC-65CD-415B-834F-9638C90E9432}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{327782DC-65CD-415B-834F-9638C90E9432}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{327782DC-65CD-415B-834F-9638C90E9432}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{327782DC-65CD-415B-834F-9638C90E9432}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

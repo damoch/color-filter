@@ -7,6 +7,7 @@ namespace ColorFilterLib
 {
     public class Filter
     {
+        public Action<Bitmap> OnSetSourcePicture;
         private Bitmap _currentImage;
         private Bitmap _grayscaledImage;
         private Bitmap _testImage;
@@ -27,6 +28,7 @@ namespace ColorFilterLib
             _inputPath = path;
             _currentImage = (Bitmap)Image.FromFile(path);
             Console.WriteLine($"{path} loaded");
+            OnSetSourcePicture?.Invoke(_currentImage);
         }
 
         public void SetColorToFilter(int red, int green, int blue)
