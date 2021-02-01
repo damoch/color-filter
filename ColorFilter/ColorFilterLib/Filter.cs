@@ -80,23 +80,21 @@ namespace ColorFilterLib
                 {
                     var px = _currentImage.GetPixel(x, y);
 
+                    if (IsWithinCurrentMatch(px))
+                    {
+                        _grayscaledImage.SetPixel(x, y, px);
+                        _filteredPixels.Add(new Pixel() { 
+                            Color = px,
+                            X = x,
+                            Y = y
+                        });
+                        continue;
+                    }
 
                     var grayScale = (int)((px.R * 0.3) + (px.G * 0.59) + (px.B * 0.11));
                     var nc = Color.FromArgb(px.A, grayScale, grayScale, grayScale);
 
                     _grayscaledImage.SetPixel(x, y, nc);
-
-                    if (!IsWithinCurrentMatch(px))
-                    {
-                        continue;
-                    }
-
-                    _filteredPixels.Add(new Pixel()
-                    {
-                        X = x,
-                        Y = y,
-                        Color = px
-                    });
                 }
             }
             sw.Stop();

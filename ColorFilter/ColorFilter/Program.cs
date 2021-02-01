@@ -64,7 +64,7 @@ namespace ColorFilter
 
 
             _filter.FilterColors();
-            _filter.ApplyFilter();
+            //_filter.ApplyFilter();
             _filter.SaveResult();
             _filter.ReleaseResources();
             Console.WriteLine("Done. Press any key to exit.");
