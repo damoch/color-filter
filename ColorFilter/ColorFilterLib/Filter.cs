@@ -8,6 +8,7 @@ namespace ColorFilterLib
     public class Filter
     {
         public Action<Bitmap> OnSetSourcePicture;
+        public Action<Bitmap> OnSetResultImage;
         private Bitmap _currentImage;
         private Bitmap _grayscaledImage;
         private Bitmap _testImage;
@@ -102,6 +103,7 @@ namespace ColorFilterLib
             sw.Stop();
             Console.WriteLine($"{_filteredPixels.Count} pixels found in {sw.ElapsedMilliseconds}ms");
 
+            OnSetResultImage?.Invoke(_grayscaledImage);
         }
 
         private bool IsWithinCurrentMatch(Color color)

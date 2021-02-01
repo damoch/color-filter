@@ -31,7 +31,13 @@ namespace ColorFilterWindows
             InitializeComponent();
 
             _filter = new Filter();
-            _filter.OnSetSourcePicture += OnSetSourcePicture;    
+            _filter.OnSetSourcePicture += OnSetSourcePicture;
+            _filter.OnSetResultImage += OnSetResultImage;
+        }
+
+        private void OnSetResultImage(Bitmap rstImage)
+        {
+            ResultImage.Source = rstImage.ToBitmapSource();
         }
 
         private void OnSetSourcePicture(Bitmap srcPicture)
@@ -49,6 +55,22 @@ namespace ColorFilterWindows
             {
                 _filter.LoadImage(filePicker.FileName);
             }
+        }
+
+        private void _colorPicker_SelectedColorChanged_1(object sender, RoutedPropertyChangedEventArgs<System.Windows.Media.Color?> e)
+        {
+            var color = e.NewValue.Value;
+            _filter.SetColorToFilter(color.R, color.G, color.B);
+        }
+
+        private void ApplyColorFilter_Click(object sender, RoutedEventArgs e)
+        {
+            _filter.FilterColors();
+        }
+
+        private void ToleranceRSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            _filter.SetTolerance((int)ToleranceRSlider.Value, (int)ToleranceGSlider.Value, (int)ToleranceBSlider.Value);
         }
     }
 }

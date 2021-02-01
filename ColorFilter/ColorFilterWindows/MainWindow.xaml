@@ -3,13 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ColorFilterWindows"
+        xmlns:local="clr-namespace:ColorFilterWindows" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="MainWindow" Height="518.888" Width="800">
+        Title="MainWindow" Height="722.888" Width="800">
     <Grid>
         <Image x:Name="SourceImage" HorizontalAlignment="Left" Height="346" VerticalAlignment="Top" Width="345" Margin="10,30,0,0"/>
         <Image x:Name="ResultImage" HorizontalAlignment="Left" Height="346" VerticalAlignment="Top" Width="363" Margin="408,30,0,0"/>
         <Button x:Name="LoadImageButton" Content="Load image" HorizontalAlignment="Left" Margin="10,399,0,0" VerticalAlignment="Top" Width="75" Click="LoadImageButton_Click"/>
 
+        <xctk:ColorCanvas x:Name="_colorPicker" Margin="110,396,458,10" SelectedColorChanged="_colorPicker_SelectedColorChanged_1" />
+        <Button x:Name="ApplyColorFilter" Content="Apply filter" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="10,438,0,0" Click="ApplyColorFilter_Click"/>
+        <Slider x:Name="ToleranceRSlider" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="372,401,0,0" Width="169" ValueChanged="ToleranceRSlider_ValueChanged" SmallChange="1" Maximum="100"/>
+        <Slider x:Name="ToleranceGSlider" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="372,440,0,0" Width="169" ValueChanged="ToleranceRSlider_ValueChanged" SmallChange="1" Maximum="100"/>
+        <Slider x:Name="ToleranceBSlider" HorizontalAlignment="Left" Margin="372,477,0,0" VerticalAlignment="Top" Width="169" ValueChanged="ToleranceRSlider_ValueChanged" SmallChange="1" Maximum="100"/>
     </Grid>
 </Window>
